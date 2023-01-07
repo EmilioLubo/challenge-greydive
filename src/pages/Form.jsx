@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
+import db from '../firebase'
+import { addDoc, collection } from 'firebase/firestore'
 
 const Form = () => {
 
     const [inputs, setInputs] = useState([])
     const [selectDefault, setSelectDefault] = useState('')
     const selectRef = useRef()
+    const formRef = useRef()
 
     useEffect(() => {
         fetch('/data/db.json')
@@ -17,10 +20,27 @@ const Form = () => {
         setSelectDefault(selectRef.current.value)
     }
 
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const formData = new FormData(formRef.current)
+        const values = Object.fromEntries(formData)
+        postData(values)
+    }
+
+    const postData = async(data) => {
+        try {
+            const col = collection(db, 'users')
+            const doc = await addDoc(col, data)
+            console.log(doc)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
   return (
     <section className='container-fluid container-lg'>
         <div>
-            <form className='d-flex flex-column' action="">
+            <form className='d-flex flex-column' ref={formRef} onSubmit={submitHandler}>
                 {
                     inputs.length > 0 ?
                     inputs.map(el => {

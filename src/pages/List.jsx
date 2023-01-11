@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import db from '../firebase'
 import { collection, getDocs } from "firebase/firestore"
-import { Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const List = () => {
 
   const [loader, setLoader] = useState(true)
   const [list, setList] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     getData()
@@ -16,7 +18,7 @@ const List = () => {
     try {
       const today = new Date()
       const docs = await getDocs(collection(db, 'users'))
-      const newList = await docs.docs.map(el => {
+      const newList = docs.docs.map(el => {
         let item = el.data()
         let birth = new Date(item.birth_date)
         let age = today.getFullYear() - birth.getFullYear()
@@ -38,8 +40,9 @@ const List = () => {
   }
 
   return (
-    <div className='d-flex align-items-center justify-content-center'>
-      <table className='table table-hover'>
+    <div className='d-flex flex-column align-items-center justify-content-center p-5'>
+      <h1 className='align-self-start'>Datos de la encuesta:</h1>
+      <table className='table table-hover m-5'>
         <thead>
           <tr>
             <th scope='col'>#</th>
@@ -49,9 +52,10 @@ const List = () => {
           </tr>
         </thead>
         <tbody>
-            {
-              loader ? 
-              <Spinner/> :
+            { loader ?
+              <tr>
+                <td className='text-center' colSpan={4}><Spinner/></td>
+              </tr> :
               list.length > 0 ?
               list.map((el, i) => 
               <tr key={i}>
@@ -61,11 +65,12 @@ const List = () => {
                 <td>{el.country[0].toUpperCase() + el.country.substring(1)}</td>
               </tr>) :
               <tr>
-                <td className='text-center' colSpan={4}>No data</td>
+                <td className='text-center' colSpan={4}>No hay datos aún...</td>
               </tr>
             }
         </tbody>
       </table>
+      <Button variant='outline-dark' onClick={() => navigate('/')}>Volver al formualario</Button>
     </div>
   )
 }

@@ -86,7 +86,7 @@ const Form = () => {
 
   return (
     <section className='container-fluid container-lg p-1'>
-        <h1 className='text-center pt-5'>¡Formá parte de la encuesta!</h1>
+        <h1 className='text-center pt-5 text-decoration-underline'>¡Formá parte de la encuesta!</h1>
         <div className='pt-5'>
             {
                 loader ?
@@ -97,7 +97,7 @@ const Form = () => {
                         inputs.map(el => {
                             if(el.type !== 'submit'){
                                 return (
-                                <label className={`fs-5 d-flex ${el.type !== 'checkbox' ? 'flex-column' : 'gap-3'}`} key={el.label}>
+                                <label className={`fs-5 fw-bold d-flex ${el.type !== 'checkbox' ? 'flex-column' : 'gap-3'}`} key={el.label}>
                                     {el.label}
                                     {
                                         el.type !== 'select' ? 

@@ -87,7 +87,7 @@ const Form = () => {
   return (
     <section className='container-fluid container-lg p-1'>
         <h1 className='text-center pt-5 text-decoration-underline'>¡Formá parte de la encuesta!</h1>
-        <div className='pt-5'>
+        <div className='pt-5 d-flex justify-content-center'>
             {
                 loader ?
                 <Spinner/> :

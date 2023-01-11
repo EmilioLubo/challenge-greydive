@@ -20,12 +20,12 @@ body {
 }
 
 .nav-link:hover{
-    border-right: solid thin black;
-    border-bottom: solid thin black;
-    border-radius: 5%;
+    text-decoration: underline;
 }
 
 select, input:not([type='submit']){
+    font-size: 1em;
+    font-weight: 600;
     background-color: transparent;
     border-radius: 1%;
     border: solid black;
@@ -36,6 +36,7 @@ select, input:not([type='submit']){
   width: 5rem;
 }
 footer{
+  border-top: black thin solid;
   position: fixed;
   bottom: 0;
 }
